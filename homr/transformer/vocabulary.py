@@ -572,7 +572,7 @@ def _remove_duplicated_piches(chord: list[EncodedSymbol]) -> list[EncodedSymbol]
         key = symbol.pitch + " " + symbol.position
         if key in by_pitch:
             if symbol.get_duration().fraction > by_pitch[key].get_duration().fraction:
-                by_pitch[symbol.pitch] = symbol
+                by_pitch[key] = symbol
         else:
             by_pitch[key] = symbol
             order_of_appearance.append(key)

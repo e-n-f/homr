@@ -76,6 +76,18 @@ class TestVocabulary(unittest.TestCase):
             ],
         )
 
+    def test_remove_duplicates_in_chord_keeps_the_longer_note(self) -> None:
+        # The same pitch twice in a chord: the longer one is kept, also when it comes second.
+        tokens_str = """clef_G2 _ _ _ _ upper
+note_8 G4 _ _ _ upper&note_4 B4 _ _ _ upper&note_4 G4 _ _ _ upper
+barline . . . . ."""
+        tokens = read_token_lines(tokens_str.splitlines())
+        result = remove_duplicated_symbols(tokens)
+        expected = """clef_G2 _ _ _ _ upper
+note_4 B4 _ _ _ upper&note_4 G4 _ _ _ upper
+barline . . . . ."""
+        self.assertEqual(token_lines_to_str(result), expected)
+
     def test_remove_duplicates_in_chord(self) -> None:
         tokens_str = """clef_G2 _ _ _ _ upper&clef_F4 _ _ _ _ lower
 keySignature_1 . . . . .
